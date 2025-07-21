@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>RocketMQ-5.3.1异常信息汇总表（完整152条）</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-family: Arial, sans-serif;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+        tr:hover {
+            background-color: #e9f5ff;
+        }
+        .error-message {
+            max-width: 600px;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>错误信息</th>
+                <th>文件名</th>
+                <th>可能的解决方案</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 1-10条 -->
+            <tr>
+                <td>1</td>
+                <td class="error-message">throw new RemotingCommandException("topicFilterType = [" + topicFilterType + "] value invalid", e)</td>
+                <td>CreateTopicRequestHeader.java</td>
+                <td>检查topicFilterType值是否符合枚举范围（如SINGLE_TAG、MULTI_TAG等）</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td class="error-message">throw new RuntimeException("this.subRemotingServer.serverBootstrap.bind().sync() InterruptedException", e)</td>
+                <td>NettyRemotingServer.java</td>
+                <td>在bind()操作中处理InterruptedException，增加重试机制或优雅退出逻辑</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td class="error-message">throw new RuntimeException("Failed to create SSLContext", e)</td>
+                <td>NettyRemotingClient.java</td>
+                <td>检查SSL证书路径、密码是否正确，确保JDK信任库包含相关证书</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td class="error-message">throw new RuntimeException("this.serverBootstrap.bind().sync() InterruptedException", e1)</td>
+                <td>ServerResponseMocker.java</td>
+                <td>测试环境中避免bind操作被中断，检查线程池配置</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td class="error-message">throw new MQClientException("Not found the topic stats info", null)</td>
+                <td>DefaultMQAdminExtImpl.java</td>
+                <td>确认topic已在broker创建，通过admin工具检查topic元数据</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td class="error-message">throw new MQClientException("Not found the producer group connection", null)</td>
+                <td>DefaultMQAdminExtImpl.java</td>
+                <td>检查生产者是否启动并成功连接到namesrv，确认group名称正确</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td class="error-message">throw new IllegalArgumentException("please set the option <brokerControllerIdsToClean> according to the format", numberFormatException)</td>
+                <td>CleanControllerBrokerMetaSubCommand.java</td>
+                <td>按指定格式（如逗号分隔的整数）设置brokerControllerIdsToClean参数</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td class="error-message">future.completeExceptionally(new MQBrokerException(1, "err"))</td>
+                <td>ConsumerProcessorTest.java</td>
+                <td>测试用例中模拟broker异常场景，验证消费者容错逻辑</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td class="error-message">ackResultFuture.completeExceptionally(new MQClientException(0, "error"))</td>
+                <td>DefaultReceiptHandleManagerTest.java</td>
+                <td>测试中完善ack逻辑，确保异常场景下资源正确释放</td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td class="error-message">ackResultFuture.completeExceptionally(new MQClientException(0, "error"))</td>
+                <td>DefaultReceiptHandleManagerTest.java</td>
+                <td>同上，检查测试用例中error触发条件是否合理</td>
+            </tr>
+            <!-- 11-20条 -->
+            <tr>
+                <td>11</td>
+                <td class="error-message">ackResultFuture.completeExceptionally(new MQClientException(0, "error"))</td>
+                <td>DefaultReceiptHandleManagerTest.java</td>
+                <td>同上，优化测试断言逻辑</td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td class="error-message">throw new RuntimeException("Failed to create SSLContext for Http2ProtocolProxyHandler", e)</td>
+                <td>Http2ProtocolProxyHandler.java</td>
+                <td>检查HTTP/2协议所需的SSL配置，确保ALPN扩展支持</td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td class="error-message">throw new RuntimeException("Create topic to broker failed", e)</td>
+                <td>ContainerIntegrationTestBase.java</td>
+                <td>集成测试中确保broker已启动，检查topic创建权限配置</td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td class="error-message">throw new RuntimeException("Create group to broker failed", e)</td>
+                <td>ContainerIntegrationTestBase.java</td>
+                <td>确认group名称符合命名规范，检查broker对group的权限控制</td>
+            </tr>
+            <tr>
+                <td>15</td>
+                <td class="error-message">throw new RuntimeException("Couldn't create tmp folder", e)</td>
+                <td>ContainerIntegrationTestBase.java</td>
+                <td>检查临时目录读写权限，更换为系统默认临时目录（如/tmp）</td>
+            </tr>
+            <tr>
+                <td>16</td>
+                <td class="error-message">throw new RuntimeException("Couldn't add slave broker", e)</td>
+                <td>ContainerIntegrationTestBase.java</td>
+                <td>检查主从broker配置一致性（如brokerIP、端口），确保网络互通</td>
+            </tr>
+            <tr>
+                <td>17</td>
+                <td class="error-message">throw new AuthorizationException("create Acl to RocksDB failed.", e)</td>
+                <td>LocalAuthorizationMetadataProvider.java</td>
+                <td>检查RocksDB数据库路径权限，确保Acl数据格式正确</td>
+            </tr>
+            <tr>
+                <td>18</td>
+                <td class="error-message">throw new AuthorizationException("delete Acl from RocksDB failed.", e)</td>
+                <td>LocalAuthorizationMetadataProvider.java</td>
+                <td>删除前检查Acl记录是否存在，处理RocksDB并发操作冲突</td>
+            </tr>
+            <tr>
+                <td>19</td>
+                <td class="error-message">throw new AuthorizationException("update Acl to RocksDB failed.", e)</td>
+                <td>LocalAuthorizationMetadataProvider.java</td>
+                <td>确保更新的Acl数据主键存在，处理RocksDB事务提交失败场景</td>
+            </tr>
+            <tr>
+                <td>20</td>
+                <td class="error-message">throw new AuthorizationException("get Acl from RocksDB failed.", e)</td>
+                <td>LocalAuthorizationMetadataProvider.java</td>
+                <td>检查查询的Acl主键是否正确，处理RocksDB连接超时问题</td>
+            </tr>
+            <!-- 21-30条 -->
+            <tr>
+                <td>21</td>
+                <td class="error-message">throw new AuthorizationException("User:{} not found.", user.getUsername())</td>
+                <td>UserAuthorizationHandler.java</td>
+                <td>验证用户名是否存在于认证系统中，检查用户同步状态</td>
+            </tr>
+            <tr>
+                <td>22</td>
+                <td class="error-message">throw new AuthenticationException("User:{} is disabled.", user.getUsername())</td>
+                <td>UserAuthorizationHandler.java</td>
+                <td>在管理界面启用被禁用用户，或检查用户状态同步逻辑</td>
+            </tr>
+            <tr>
+                <td>23</td>
+                <td class="error-message">throw new AuthorizationException("The subject of {} is not exist.", acl.getSubject().getSubjectKey())</td>
+                <td>AuthorizationMetadataManagerImpl.java</td>
+                <td>确认Acl主题已创建，检查主题密钥格式是否正确</td>
+            </tr>
+            <tr>
+                <td>24</td>
+                <td class="error-message">throw new AuthorizationException("The subject of {} is not exist.", acl.getSubject().getSubjectKey())</td>
+                <td>AuthorizationMetadataManagerImpl.java</td>
+                <td>同上，检查主题元数据是否已同步到授权系统</td>
+            </tr>
+            <tr>
+                <td>25</td>
+                <td class="error-message">throw new AuthorizationException("parse authorization context error.", t)</td>
+                <td>DefaultAuthorizationContextBuilder.java</td>
+                <td>检查授权上下文JSON格式，修复解析逻辑中的异常处理</td>
+            </tr>
+            <tr>
+                <td>26</td>
+                <td class="error-message">throw new RuntimeException("Failed to load the authorization provider.", e)</td>
+                <td>AuthorizationFactory.java</td>
+                <td>检查授权提供者类路径是否正确，确保依赖包已引入</td>
+            </tr>
+            <tr>
+                <td>27</td>
+                <td class="error-message">throw new RuntimeException("Failed to load the authorization metadata provider.", e)</td>
+                <td>AuthorizationFactory.java</td>
+                <td>确认元数据提供者配置正确，处理初始化时的异常</td>
+            </tr>
+            <tr>
+                <td>28</td>
+                <td class="error-message">throw new AuthorizationException("The request of {} is not support.", context.getClass().getSimpleName())</td>
+                <td>StatefulAuthorizationStrategy.java</td>
+                <td>更新授权策略以支持该请求类型，或限制不支持的请求访问</td>
+            </tr>
+            <tr>
+                <td>29</td>
+                <td class="error-message">throw new AuthorizationException("Authorization failed. Please verify your access rights and try again.", exception)</td>
+                <td>AbstractAuthorizationStrategy.java</td>
+                <td>检查用户权限配置，确保包含该操作所需的权限项</td>
+            </tr>
+            <tr>
+                <td>30</td>
+                <td class="error-message">throw new AuthenticationException("create user to RocksDB failed", e)</td>
+                <td>LocalAuthenticationMetadataProvider.java</td>
+                <td>检查用户数据格式，确保RocksDB有足够空间存储新用户</td>
+            </tr>
+            <!-- 31-40条 -->
+            <tr>
+                <td>31</td>
+                <td class="error-message">throw new AuthenticationException("delete user from RocksDB failed", e)</td>
+                <td>LocalAuthenticationMetadataProvider.java</td>
+                <td>删除前验证用户是否存在，处理RocksDB锁冲突</td>
+            </tr>
+            <tr>
+                <td>32</td>
+                <td class="error-message">throw new AuthenticationException("update user to RocksDB failed", e)</td>
+                <td>LocalAuthenticationMetadataProvider.java</td>
+                <td>确保用户数据版本一致性，处理并发更新冲突</td>
+            </tr>
+            <tr>
+                <td>33</td>
+                <td class="error-message">throw new AuthenticationException("Get user from RocksDB failed.", e)</td>
+                <td>LocalAuthenticationMetadataProvider.java</td>
+                <td>检查用户名是否正确，处理RocksDB读取超时问题</td>
+            </tr>
+            <tr>
+                <td>34</td>
+                <td class="error-message">throw new AuthenticationException("User:{} is not found.", context.getUsername())</td>
+                <td>DefaultAuthenticationHandler.java</td>
+                <td>验证用户名正确性，检查用户数据同步状态</td>
+            </tr>
+            <tr>
+                <td>35</td>
+                <td class="error-message">throw new AuthenticationException("User:{} is disabled.", context.getUsername())</td>
+                <td>DefaultAuthenticationHandler.java</td>
+                <td>启用用户账号，或提示用户联系管理员解锁</td>
+            </tr>
+            <tr>
+                <td>36</td>
+                <td class="error-message">throw new AuthenticationException("Init authentication user error.", e)</td>
+                <td>AuthenticationMetadataManagerImpl.java</td>
+                <td>检查初始化用户数据的SQL脚本或配置文件，修复数据格式错误</td>
+            </tr>
+            <tr>
+                <td>37</td>
+                <td class="error-message">throw new AuthenticationException("Init inner client authentication credentials error", e)</td>
+                <td>AuthenticationMetadataManagerImpl.java</td>
+                <td>确认内部客户端凭证文件存在且格式正确</td>
+            </tr>
+            <tr>
+                <td>38</td>
+                <td class="error-message">throw new AuthenticationException("User:{} is not found", username)</td>
+                <td>AuthenticationMetadataManagerImpl.java</td>
+                <td>检查用户查询逻辑，确保用户名大小写敏感处理正确</td>
+            </tr>
+            <tr>
+                <td>39</td>
+                <td class="error-message">throw new AuthenticationException("create authentication context error.", e)</td>
+                <td>DefaultAuthenticationContextBuilder.java</td>
+                <td>修复上下文创建逻辑中的空指针或格式错误</td>
+            </tr>
+            <tr>
+                <td>40</td>
+                <td class="error-message">throw new RuntimeException("Failed to load the authentication provider.", e)</td>
+                <td>AuthenticationFactory.java</td>
+                <td>检查认证提供者类是否实现了指定接口，处理类加载异常</td>
+            </tr>
+            <!-- 41-50条 -->
+            <tr>
+                <td>41</td>
+                <td class="error-message">throw new RuntimeException("Failed to load the authentication metadata provider", e)</td>
+                <td>AuthenticationFactory.java</td>
+                <td>确认元数据提供者配置路径正确，处理IO异常</td>
+            </tr>
+            <tr>
+                <td>42</td>
+                <td class="error-message">throw new AuthenticationException("The request of {} is not support.", context.getClass().getSimpleName())</td>
+                <td>StatefulAuthenticationStrategy.java</td>
+                <td>扩展认证策略以支持新请求类型，或返回明确的不支持提示</td>
+            </tr>
+            <tr>
+                <td>43</td>
+                <td class="error-message">throw new AuthenticationException("Authentication failed. Please verify the credentials and try again.", exception)</td>
+                <td>AbstractAuthenticationStrategy.java</td>
+                <td>检查用户名密码是否正确，处理密码加密/解密逻辑错误</td>
+            </tr>
+            <tr>
+                <td>44</td>
+                <td class="error-message">throw new RemotingCommandException("Failed to decode RegisterBrokerBody", e)</td>
+                <td>DefaultRequestProcessor.java</td>
+                <td>检查RegisterBrokerBody的序列化格式，确保与broker版本兼容</td>
+            </tr>
+            <tr>
+                <td>45</td>
+                <td class="error-message">final Throwable exception = new OMSRuntimeException("-1", "Test Error")</td>
+                <td>DefaultPromiseTest.java</td>
+                <td>测试用例中模拟异常场景，验证Promise异常处理逻辑</td>
+            </tr>
+            <tr>
+                <td>46</td>
+                <td class="error-message">final Throwable exception = new OMSRuntimeException("-1", "Test Error")</td>
+                <td>DefaultPromiseTest.java</td>
+                <td>同上，优化测试断言信息</td>
+            </tr>
+            <tr>
+                <td>47</td>
+                <td class="error-message">Throwable exception = new OMSRuntimeException("-1", "Test Error")</td>
+                <td>DefaultPromiseTest.java</td>
+                <td>同上，确保测试覆盖率</td>
+            </tr>
+            <tr>
+                <td>48</td>
+                <td class="error-message">throw new OMSNotSupportedException("-1", "ResourceManager is not supported in current version.")</td>
+                <td>MessagingAccessPointImpl.java</td>
+                <td>升级到支持ResourceManager的版本，或使用替代功能</td>
+            </tr>
+            <tr>
+                <td>49</td>
+                <td class="error-message">throw new OMSRuntimeException("-1", "OMS AccessPoints is null or empty.")</td>
+                <td>AbstractOMSProducer.java</td>
+                <td>配置有效的OMS AccessPoints地址，确保不为空或空字符串</td>
+            </tr>
+            <tr>
+                <td>50</td>
+                <td class="error-message">throw new OMSRuntimeException("-1", e)</td>
+                <td>AbstractOMSProducer.java</td>
+                <td>捕获并处理底层异常（如网络异常），返回更具体的错误信息</td>
+            </tr>
+            <!-- 51-60条 -->
+            <tr>
+                <td>51</td>
+                <td class="error-message">return new OMSTimeOutException("-1", String.format("Send message to broker timeout, %dms, Topic=%s, msgId=%s", this.rocketmqProducer.getSendMsgTimeout(), topic, msgId), e)</td>
+                <td>AbstractOMSProducer.java</td>
+                <td>增加sendMsgTimeout配置，优化broker处理速度，或减少消息大小</td>
+            </tr>
+            <tr>
+                <td>52</td>
+                <td class="error-message">return new OMSRuntimeException("-1", String.format("Received a broker exception, Topic=%s, msgId=%s, %s", topic, msgId, brokerException.getErrorMessage()), e)</td>
+                <td>AbstractOMSProducer.java</td>
+                <td>根据broker异常信息修复（如topic不存在则创建，权限不足则申请权限）</td>
+            </tr>
+            <tr>
+                <td>53</td>
+                <td class="error-message">return new OMSRuntimeException("-1", String.format("Network connection experiences failures. Topic=%s, msgId=%s, %s", topic, msgId, connectException.getMessage()))</td>
+                <td>AbstractOMSProducer.java</td>
+                <td>检查网络连接，修复DNS解析问题，增加重试机制</td>
+            </tr>
+            <tr>
+                <td>54</td>
+                <td class="error-message">return new OMSRuntimeException("-1", String.format("Topic does not exist, Topic=%s, msgId=%s", topic, msgId), e)</td>
+                <td>AbstractOMSProducer.java</td>
+                <td>先创建topic再发送消息，或配置自动创建topic功能</td>
+            </tr>
+            <tr>
+                <td>55</td>
+                <td class="error-message">return new OMSMessageFormatException("-1", String.format("A illegal message for RocketMQ, Topic=%s, msgId=%s", topic, msgId), e)</td>
+                <td>AbstractOMSProducer.java</td>
+                <td>检查消息格式（如属性、body大小），确保符合RocketMQ要求</td>
+            </tr>
+            <tr>
+                <td>56</td>
+                <td class="error-message">return new OMSRuntimeException("-1", "Send message to RocketMQ broker failed.", e)</td>
+                <td>AbstractOMSProducer.java</td>
+                <td>综合检查broker状态、网络、消息格式，查看broker日志定位原因</td>
+            </tr>
+            <tr>
+                <td>57</td>
+                <td class="error-message">throw new OMSNotSupportedException("-1", "Only BytesMessage is supported.")</td>
+                <td>AbstractOMSProducer.java</td>
+                <td>将消息转换为BytesMessage类型，确保符合格式要求</td>
+            </tr>
+            <tr>
+                <td>58</td>
+                <td class="error-message">throw new OMSRuntimeException("-1", "Send message to RocketMQ broker failed.")</td>
+                <td>ProducerImpl.java</td>
+                <td>检查生产者配置（如namesrv地址），确保连接正常</td>
+            </tr>
+            <tr>
+                <td>59</td>
+                <td class="error-message">throw new OMSRuntimeException("-1", e)</td>
+                <td>DefaultPromise.java</td>
+                <td>捕获底层异常并封装，提供更友好的错误提示</td>
+            </tr>
+            <tr>
+                <td>60</td>
+                <td class="error-message">throw new OMSRuntimeException("-1", "OMS AccessPoints is null or empty.")</td>
+                <td>PushConsumerImpl.java</td>
+                <td>配置有效的OMS AccessPoints，确保消费者初始化参数正确</td>
+            </tr>
+            <!-- 61-70条 -->
+            <tr>
+                <td>61</td>
+                <td class="error-message">throw new OMSRuntimeException("-1", "Consumer Group is necessary for RocketMQ, please set it.")</td>
+                <td>PushConsumerImpl.java</td>
+                <td>设置有效的Consumer Group名称，确保符合命名规范</td>
+            </tr>
+            <tr>
+                <td>62</td>
+                <td class="error-message">throw new OMSRuntimeException("-1", String.format("RocketMQ push consumer can't attach to %s.", queueName))</td>
+                <td>PushConsumerImpl.java</td>
+                <td>检查queueName是否存在，确认消费者对该队列有访问权限</td>
+            </tr>
+            <tr>
+                <td>63</td>
+                <td class="error-message">throw new OMSRuntimeException("-1", String.format("RocketMQ push consumer fails to unsubscribe topic: %s", queueName))</td>
+                <td>PushConsumerImpl.java</td>
+                <td>确认unsubscribe前已订阅该topic，处理并发 unsubscribe 冲突</td>
+            </tr>
+            <tr>
+                <td>64</td>
+                <td class="error-message">throw new OMSRuntimeException("-1", e)</td>
+                <td>PushConsumerImpl.java</td>
+                <td>捕获并处理消费者内部异常（如线程池满），增加监控告警</td>
+            </tr>
+            <tr>
+                <td>65</td>
+                <td class="error-message">throw new OMSRuntimeException("-1", String.format("The topic/queue %s isn't attached to this consumer", rmqMsg.getTopic()))</td>
+                <td>PushConsumerImpl.java</td>
+                <td>确保消费者已订阅该topic，检查消息路由是否正确</td>
+            </tr>
+            <tr>
+                <td>66</td>
+                <td class="error-message">throw new OMSRuntimeException("-1", "Consumer Group is necessary for RocketMQ, please set it.")</td>
+                <td>PullConsumerImpl.java</td>
+                <td>为PullConsumer设置有效的Consumer Group</td>
+            </tr>
+            <tr>
+                <td>67</td>
+                <td class="error-message">throw new OMSRuntimeException("-1", "OMS AccessPoints is null or empty.")</td>
+                <td>PullConsumerImpl.java</td>
+                <td>配置非空的OMS AccessPoints地址</td>
+            </tr>
+            <tr>
+                <td>68</td>
+                <td class="error-message">throw new OMSRuntimeException("-1", e)</td>
+                <td>PullConsumerImpl.java</td>
+                <td>处理拉取消息时的异常（如offset无效），增加重试逻辑</td>
+            </tr>
+            <tr>
+                <td>69</td>
+                <td class="error-message">throw new OMSMessageFormatException("", "Cannot assign byte[] to " + type.getName())</td>
+                <td>BytesMessageImpl.java</td>
+                <td>确保消息体类型与赋值类型一致，增加类型转换校验</td>
+            </tr>
+            <tr>
+                <td>70</td>
+                <td class="error-message">throw new RuntimeException("Couldn't create tmp folder", e)</td>
+                <td>BrokerContainerStartupTest.java</td>
+                <td>测试环境中确保/tmp目录可写，或指定自定义临时目录</td>
+            </tr>
+            <!-- 71-80条 -->
+            <tr>
+                <td>71</td>
+                <td class="error-message">throw new RuntimeException("Couldn't create tmp folder", e)</td>
+                <td>BrokerContainerTest.java</td>
+                <td>同上，检查测试用例中的目录权限设置</td>
+            </tr>
+            <tr>
+                <td>72</td>
+                <td class="error-message">throw new RuntimeException("get local inet address fail", e)</td>
+                <td>MixAll.java</td>
+                <td>检查网络接口配置，确保至少有一个可用的本地IP地址</td>
+            </tr>
+            <tr>
+                <td>73</td>
+                <td class="error-message">throw new RuntimeException("Can not get local ip", e)</td>
+                <td>UtilAll.java</td>
+                <td>修复本地IP获取逻辑，处理多网卡场景下的IP选择</td>
+            </tr>
+            <tr>
+                <td>74</td>
+                <td class="error-message">throw new MQFilterException("Invalid MessageSelector. ", e)</td>
+                <td>SelectorParser.java</td>
+                <td>检查MessageSelector语法（如SQL92表达式），修复解析错误</td>
+            </tr>
+            <tr>
+                <td>75</td>
+                <td class="error-message">doThrow(new MQClientException("checkClientInBroker exception", null)).when(mQClientAPIImpl).checkClientInBroker(</td>
+                <td>MQClientInstanceTest.java</td>
+                <td>测试用例中模拟checkClientInBroker异常，验证容错逻辑</td>
+            </tr>
+            <tr>
+                <td>76</td>
+                <td class="error-message">doThrow(new RemotingException("", null))</td>
+                <td>RemoteBrokerOffsetStoreTest.java</td>
+                <td>测试中模拟远程调用异常，验证offset存储的异常处理</td>
+            </tr>
+            <tr>
+                <td>77</td>
+                <td class="error-message">throw new MQClientException("the specified group is blank", null)</td>
+                <td>Validators.java</td>
+                <td>确保group名称不为空或空白字符串，增加参数校验</td>
+            </tr>
+            <tr>
+                <td>78</td>
+                <td class="error-message">throw new MQClientException("the specified group is longer than group max length 255.", null)</td>
+                <td>Validators.java</td>
+                <td>缩短group名称至255字符以内，符合命名规范</td>
+            </tr>
+            <tr>
+                <td>79</td>
+                <td class="error-message">throw new MQClientException("The specified topic is blank", null)</td>
+                <td>Validators.java</td>
+                <td>确保topic名称不为空，增加创建topic时的非空校验</td>
+            </tr>
+            <tr>
+                <td>80</td>
+                <td class="error-message">exception = new MQClientException("create topic to broker exception", e)</td>
+                <td>MQAdminImpl.java</td>
+                <td>检查创建topic的参数（如queue数），确保broker有足够资源</td>
+            </tr>
+            <!-- 81-90条 -->
+            <tr>
+                <td>81</td>
+                <td class="error-message">throw new MQClientException("create new topic failed", e)</td>
+                <td>MQAdminImpl.java</td>
+                <td>查看broker日志定位创建失败原因（如权限、磁盘满）</td>
+            </tr>
+            <tr>
+                <td>82</td>
+                <td class="error-message">throw new MQClientException("Invoke Broker[" + brokerAddr + "] exception", e)</td>
+                <td>MQAdminImpl.java</td>
+                <td>检查brokerAddr是否可达，处理网络超时或broker宕机</td>
+            </tr>
+            <tr>
+                <td>83</td>
+                <td class="error-message">throw new MQClientException("The broker[" + mq.getBrokerName() + "] not exist", null)</td>
+                <td>MQAdminImpl.java</td>
+                <td>确认broker已注册到namesrv，检查brokerName是否正确</td>
+            </tr>
+            <tr>
+                <td>84</td>
+                <td class="error-message">throw new MQClientException("Invoke Broker[" + brokerAddr + "] exception", e)</td>
+                <td>MQAdminImpl.java</td>
+                <td>同上，增加broker健康检查机制</td>
+            </tr>
+            <tr>
+                <td>85</td>
+                <td class="error-message">throw new MQClientException("The broker[" + mq.getBrokerName() + "] not exist", null)</td>
+                <td>MQAdminImpl.java</td>
+                <td>同上，处理broker下线场景的容错</td>
+            </tr>
+            <tr>
+                <td>86</td>
+                <td class="error-message">throw new MQClientException("Invoke Broker[" + brokerAddr + "] exception", e)</td>
+                <td>MQAdminImpl.java</td>
+                <td>同上，优化远程调用超时设置</td>
+            </tr>
+            <tr>
+                <td>87</td>
+                <td class="error-message">throw new MQClientException("The broker[" + mq.getBrokerName() + "] not exist", null)</td>
+                <td>MQAdminImpl.java</td>
+                <td>同上，从namesrv重新获取broker列表</td>
+            </tr>
+            <tr>
+                <td>88</td>
+                <td class="error-message">throw new MQClientException("Invoke Broker[" + brokerAddr + "] exception", e)</td>
+                <td>MQAdminImpl.java</td>
+                <td>同上，增加重试机制</td>
+            </tr>
+            <tr>
+                <td>89</td>
+                <td class="error-message">throw new MQClientException("The broker[" + mq.getBrokerName() + "] not exist", null)</td>
+                <td>MQAdminImpl.java</td>
+                <td>同上，更新本地broker路由缓存</td>
+            </tr>
+            <tr>
+                <td>90</td>
+                <td class="error-message">MQClientException ex = new MQClientException("send request failed", throwable)</td>
+                <td>MQClientAPIImpl.java</td>
+                <td>检查请求参数和序列化格式，处理网络波动导致的发送失败</td>
+            </tr>
+            <!-- 91-100条 -->
+            <tr>
+                <td>91</td>
+                <td class="error-message">MQClientException ex = new MQClientException("unknown reason", throwable)</td>
+                <td>MQClientAPIImpl.java</td>
+                <td>增强异常日志，记录详细上下文信息以定位未知原因</td>
+            </tr>
+            <tr>
+                <td>92</td>
+                <td class="error-message">throw new MQClientException("producerGroup can not equal " + MixAll.DEFAULT_PRODUCER_GROUP + ", please specify another one.", null)</td>
+                <td>DefaultMQProducerImpl.java</td>
+                <td>自定义producerGroup名称，避免使用默认值DEFAULT_PRODUCER_GROUP</td>
+            </tr>
+            <tr>
+                <td>93</td>
+                <td class="error-message">throw new MQClientException("executor rejected ", e)</td>
+                <td>DefaultMQProducerImpl.java</td>
+                <td>增大生产者线程池容量，或优化消息发送速率</td>
+            </tr>
+            <tr>
+                <td>94</td>
+                <td class="error-message">throw new MQClientException("select message queue threw exception.", e)</td>
+                <td>DefaultMQProducerImpl.java</td>
+                <td>修复队列选择算法中的异常（如空指针），增加队列状态检查</td>
+            </tr>
+            <tr>
+                <td>95</td>
+                <td class="error-message">throw new MQClientException("select message queue return null.", null)</td>
+                <td>DefaultMQProducerImpl.java</td>
+                <td>确保topic有可用队列，处理broker全部下线场景</td>
+            </tr>
+            <tr>
+                <td>96</td>
+                <td class="error-message">throw new MQClientException("The broker[" + brokerName + "] not exist", null)</td>
+                <td>DefaultMQProducerImpl.java</td>
+                <td>从namesrv刷新broker列表，确认broker是否已下线</td>
+            </tr>
+            <tr>
+                <td>97</td>
+                <td class="error-message">throw new MQClientException("unknown exception", e)</td>
+                <td>DefaultMQProducerImpl.java</td>
+                <td>捕获并处理未知异常，记录详细日志以便排查</td>
+            </tr>
+            <tr>
+                <td>98</td>
+                <td class="error-message">throw new MQClientException("message's topic not equal mq's topic", null)</td>
+                <td>DefaultMQProducerImpl.java</td>
+                <td>确保消息topic与目标队列topic一致，修复路由逻辑错误</td>
+            </tr>
+            <tr>
+                <td>99</td>
+                <td class="error-message">throw new MQClientException("Topic of the message does not match its target message queue", null)</td>
+                <td>DefaultMQProducerImpl.java</td>
+                <td>同上，增加消息与队列topic一致性校验</td>
+            </tr>
+            <tr>
+                <td>100</td>
+                <td class="error-message">throw new MQClientException("unknown exception", e)</td>
+                <td>DefaultMQProducerImpl.java</td>
+                <td>同上，增强异常监控告警</td>
+            </tr>
+            <!-- 101-110条 -->
+            <tr>
+                <td>101</td>
+                <td class="error-message">throw new MQClientException("unknown exception", e)</td>
+                <td>DefaultMQProducerImpl.java</td>
+                <td>同上，优化异常处理逻辑</td>
+            </tr>
+            <tr>
+                <td>102</td>
+                <td class="error-message">throw new MQClientException("select message queue threw exception.", e)</td>
+                <td>DefaultMQProducerImpl.java</td>
+                <td>同上，修复队列选择逻辑中的异常</td>
+            </tr>
+            <tr>
+                <td>103</td>
+                <td class="error-message">throw new MQClientException("select message queue return null.", null)</td>
+                <td>DefaultMQProducerImpl.java</td>
+                <td>同上，增加队列自动创建机制（如配置允许自动创建）</td>
+            </tr>
+            <tr>
+                <td>104</td>
+                <td class="error-message">throw new MQClientException("unknown exception", e)</td>
+                <td>DefaultMQProducerImpl.java</td>
+                <td>同上，升级客户端版本修复已知bug</td>
+            </tr>
+            <tr>
+                <td>105</td>
+                <td class="error-message">throw new MQClientException("unknown exception", e)</td>
+                <td>DefaultMQProducerImpl.java</td>
+                <td>同上，增加分布式追踪定位问题</td>
+            </tr>
+            <tr>
+                <td>106</td>
+                <td class="error-message">throw new MQClientException("tranExecutor is null", null)</td>
+                <td>DefaultMQProducerImpl.java</td>
+                <td>初始化事务消息生产者时指定tranExecutor，确保不为空</td>
+            </tr>
+            <tr>
+                <td>107</td>
+                <td class="error-message">throw new MQClientException("send message Exception", e)</td>
+                <td>DefaultMQProducerImpl.java</td>
+                <td>综合检查消息发送各环节，处理序列化、网络等异常</td>
+            </tr>
+            <tr>
+                <td>108</td>
+                <td class="error-message">throw new MQClientException("send request message to <" + msg.getTopic() + "> fail", requestResponseFuture.getCause());</td>
+                <td>DefaultMQProducerImpl.java</td>
+                <td>检查请求消息格式，确保broker支持该类型请求</td>
+            </tr>
+            <tr>
+                <td>109</td>
+                <td class="error-message">throw new MQClientException("subscribe exception", e)</td>
+                <td>DefaultLitePullConsumerImpl.java</td>
+                <td>修复订阅逻辑中的异常（如过滤表达式错误），增加重试</td>
+            </tr>
+            <tr>
+                <td>110</td>
+                <td class="error-message">throw new MQClientException("subscribe exception", e)</td>
+                <td>DefaultLitePullConsumerImpl.java</td>
+                <td>同上，检查topic是否存在</td>
+            </tr>
+            <!-- 111-120条 -->
+            <tr>
+                <td>111</td>
+                <td class="error-message">throw new MQClientException("subscribe exception", e)</td>
+                <td>DefaultLitePullConsumerImpl.java</td>
+                <td>同上，处理并发订阅冲突</td>
+            </tr>
+            <tr>
+                <td>112</td>
+                <td class="error-message">throw new MQClientException("Fetch consume offset from broker exception", null)</td>
+                <td>DefaultLitePullConsumerImpl.java</td>
+                <td>检查offset存储配置，修复从broker获取offset的逻辑</td>
+            </tr>
+            <tr>
+                <td>113</td>
+                <td class="error-message">throw new MQClientException("mq is null", null)</td>
+                <td>DefaultLitePullConsumerImpl.java</td>
+                <td>确保MessageQueue不为空，增加参数校验</td>
+            </tr>
+            <tr>
+                <td>114</td>
+                <td class="error-message">throw new MQClientException("offset < 0", null)</td>
+                <td>DefaultLitePullConsumerImpl.java</td>
+                <td>确保设置的offset为非负值，增加边界校验</td>
+            </tr>
+            <tr>
+                <td>115</td>
+                <td class="error-message">throw new MQClientException("maxNums <= 0", null)</td>
+                <td>DefaultLitePullConsumerImpl.java</td>
+                <td>设置maxNums为正数（如1-32），符合拉取数量限制</td>
+            </tr>
+            <tr>
+                <td>116</td>
+                <td class="error-message">throw new MQClientException("Topic or listener is null", null)</td>
+                <td>DefaultLitePullConsumerImpl.java</td>
+                <td>确保订阅时topic和listener均不为空，增加非空校验</td>
+            </tr>
+            <tr>
+                <td>117</td>
+                <td class="error-message">throw new MQClientException("The topic[" + topic + "] not exist", null)</td>
+                <td>DefaultMQPushConsumerImpl.java</td>
+                <td>先创建topic再订阅，或配置broker自动创建topic</td>
+            </tr>
+            <tr>
+                <td>118</td>
+                <td class="error-message">throw new MQClientException("The broker[" + desBrokerName + "] not exist", null)</td>
+                <td>DefaultMQPushConsumerImpl.java</td>
+                <td>从namesrv更新broker列表，确认目标broker是否在线</td>
+            </tr>
+            <tr>
+                <td>119</td>
+                <td class="error-message">throw new MQClientException("subscription exception", e)</td>
+                <td>DefaultMQPushConsumerImpl.java</td>
+                <td>修复订阅逻辑异常，如过滤表达式解析错误</td>
+            </tr>
+            <tr>
+                <td>120</td>
+                <td class="error-message">throw new MQClientException("subscription exception", e)</td>
+                <td>DefaultMQPushConsumerImpl.java</td>
+                <td>同上，处理并发订阅冲突</td>
+            </tr>
+            <!-- 121-130条 -->
+            <tr>
+                <td>121</td>
+                <td class="error-message">throw new MQClientException("subscription exception", e)</td>
+                <td>DefaultMQPushConsumerImpl.java</td>
+                <td>同上，检查订阅权限</td>
+            </tr>
+            <tr>
+                <td>122</td>
+                <td class="error-message">throw new MQClientException("subscription exception", e)</td>
+                <td>DefaultMQPushConsumerImpl.java</td>
+                <td>同上，增加重试机制</td>
+            </tr>
+            <tr>
+                <td>123</td>
+                <td class="error-message">throw new MQClientException("mq is null", null)</td>
+                <td>DefaultMQPullConsumerImpl.java</td>
+                <td>确保MessageQueue参数不为空，增加校验</td>
+            </tr>
+            <tr>
+                <td>124</td>
+                <td class="error-message">throw new MQClientException("parse subscription error", e)</td>
+                <td>DefaultMQPullConsumerImpl.java</td>
+                <td>修复订阅表达式解析逻辑，支持正确的语法格式</td>
+            </tr>
+            <tr>
+                <td>125</td>
+                <td class="error-message">throw new MQClientException("mq is null", null)</td>
+                <td>DefaultMQPullConsumerImpl.java</td>
+                <td>同上，检查参数传递是否正确</td>
+            </tr>
+            <tr>
+                <td>126</td>
+                <td class="error-message">throw new MQClientException("parse subscription error", e)</td>
+                <td>DefaultMQPullConsumerImpl.java</td>
+                <td>同上，增加表达式语法校验</td>
+            </tr>
+            <tr>
+                <td>127</td>
+                <td class="error-message">throw new MQClientException("mq is null", null)</td>
+                <td>DefaultMQPullConsumerImpl.java</td>
+                <td>同上，完善参数校验逻辑</td>
+            </tr>
+            <tr>
+                <td>128</td>
+                <td class="error-message">throw new MQClientException("offset < 0", null)</td>
+                <td>DefaultMQPullConsumerImpl.java</td>
+                <td>确保offset为非负值，处理负数输入场景</td>
+            </tr>
+            <tr>
+                <td>129</td>
+                <td class="error-message">throw new MQClientException("maxNums <= 0", null)</td>
+                <td>DefaultMQPullConsumerImpl.java</td>
+                <td>设置maxNums为正数，符合拉取数量限制</td>
+            </tr>
+            <tr>
+                <td>130</td>
+                <td class="error-message">throw new MQClientException("maxSizeInBytes <= 0", null)</td>
+                <td>DefaultMQPullConsumerImpl.java</td>
+                <td>确保maxSizeInBytes为正数，合理设置拉取大小</td>
+            </tr>
+            <!-- 131-140条 -->
+            <tr>
+                <td>131</td>
+                <td class="error-message">throw new MQClientException("pullCallback is null", null)</td>
+                <td>DefaultMQPullConsumerImpl.java</td>
+                <td>异步拉取时指定非空的pullCallback，确保回调逻辑存在</td>
+            </tr>
+            <tr>
+                <td>132</td>
+                <td class="error-message">throw new MQClientException("pullAsync unknow exception", e)</td>
+                <td>DefaultMQPullConsumerImpl.java</td>
+                <td>捕获并处理异步拉取的未知异常，记录详细日志</td>
+            </tr>
+            <tr>
+                <td>133</td>
+                <td class="error-message">throw new MQClientException("subscription exception", e)</td>
+                <td>DefaultMQPullConsumerImpl.java</td>
+                <td>修复订阅逻辑异常，增加重试机制</td>
+            </tr>
+            <tr>
+                <td>134</td>
+                <td class="error-message">throw new MQClientException("The broker[" + mq.getBrokerName() + ", ")</td>
+                <td>PullAPIWrapper.java</td>
+                <td>检查broker名称和地址是否正确，确保网络可达</td>
+            </tr>
+            <tr>
+                <td>135</td>
+                <td class="error-message">throw new MQClientException("The broker[" + mq.getBrokerName() + "] not exist", null)</td>
+                <td>PullAPIWrapper.java</td>
+                <td>从namesrv刷新broker列表，处理broker下线场景</td>
+            </tr>
+            <tr>
+                <td>136</td>
+                <td class="error-message">throw new MQClientException("The broker[" + mq.getBrokerName() + "] not exist", null)</td>
+                <td>PullAPIWrapper.java</td>
+                <td>同上，更新本地路由缓存</td>
+            </tr>
+            <tr>
+                <td>137</td>
+                <td class="error-message">throw new MQClientException("Failed to initiate the MessageBatch", e)</td>
+                <td>DefaultMQProducer.java</td>
+                <td>检查批量消息格式，确保消息体大小和数量符合限制</td>
+            </tr>
+            <tr>
+                <td>138</td>
+                <td class="error-message">throw new MQClientException("TransactionListener is null", null)</td>
+                <td>TransactionMQProducer.java</td>
+                <td>初始化事务生产者时设置非空的TransactionListener</td>
+            </tr>
+            <tr>
+                <td>139</td>
+                <td class="error-message">throw new RuntimeException("Invalid ConsumeFromWhere Value", null)</td>
+                <td>DefaultLitePullConsumer.java</td>
+                <td>设置有效的ConsumeFromWhere值（如CONSUME_FROM_FIRST_OFFSET）</td>
+            </tr>
+            <tr>
+                <td>140</td>
+                <td class="error-message">throw new MQClientException("The broker[" + mq.getBrokerName() + "] not exist", null)</td>
+                <td>RemoteBrokerOffsetStore.java</td>
+                <td>确认broker存在，从namesrv获取最新broker列表</td>
+            </tr>
+            <!-- 141-150条 -->
+            <tr>
+                <td>141</td>
+                <td class="error-message">throw new MQClientException("The broker[" + mq.getBrokerName() + "] not exist", null)</td>
+                <td>RemoteBrokerOffsetStore.java</td>
+                <td>同上，处理offset存储时的broker下线场景</td>
+            </tr>
+            <tr>
+                <td>142</td>
+                <td class="error-message">AclException aclException = new AclException("CAL_SIGNATURE_FAILED",10015);</td>
+                <td>PermissionTest.java</td>
+                <td>测试中模拟签名计算失败场景，验证ACL容错逻辑</td>
+            </tr>
+            <tr>
+                <td>143</td>
+                <td class="error-message">AclException aclExceptionWithMessage = new AclException("CAL_SIGNATURE_FAILED",10015,"CAL_SIGNATURE_FAILED Exception");</td>
+                <td>PermissionTest.java</td>
+                <td>同上，测试异常消息传递是否正确</td>
+            </tr>
+            <tr>
+                <td>144</td>
+                <td class="error-message">throw new RuntimeException("incompatible exception.", e)</td>
+                <td>AclClientRPCHookTest.java</td>
+                <td>测试中处理不兼容的异常类型，确保测试稳定性</td>
+            </tr>
+            <tr>
+                <td>145</td>
+                <td class="error-message">throw new AclException("CAL_SIGNATURE_FAILED", CAL_SIGNATURE_FAILED, message, e)</td>
+                <td>AclSigner.java</td>
+                <td>检查签名计算参数（如AccessKey、SecretKey），确保格式正确</td>
+            </tr>
+            <tr>
+                <td>146</td>
+                <td class="error-message">throw new AclException("CAL_SIGNATURE_FAILED", CAL_SIGNATURE_FAILED, message, e)</td>
+                <td>AclSigner.java</td>
+                <td>同上，处理签名计算时的IO异常</td>
+            </tr>
+            <tr>
+                <td>147</td>
+                <td class="error-message">throw new AclException("CAL_SIGNATURE_FAILED", CAL_SIGNATURE_FAILED, message, e)</td>
+                <td>AclSigner.java</td>
+                <td>同上，修复编码转换错误</td>
+            </tr>
+            <tr>
+                <td>148</td>
+                <td class="error-message">throw new RuntimeException("Incompatible exception.", e)</td>
+                <td>AclUtils.java</td>
+                <td>处理异常转换时的不兼容类型，增加类型判断逻辑</td>
+            </tr>
+            <tr>
+                <td>149</td>
+                <td class="error-message">throw new RuntimeException("Initialize plugin's class: " + pluginClass + " not found!", e)</td>
+                <td>MessageStoreFactory.java</td>
+                <td>确认插件类路径正确，确保插件JAR包已引入classpath</td>
+            </tr>
+            <tr>
+                <td>150</td>
+                <td class="error-message">throw new MQClientException("mq is null", null)</td>
+                <td>DefaultMQPullConsumerImpl.java</td>
+                <td>参数校验确保MessageQueue不为空，修复空指针场景</td>
+            </tr>
+            <!-- 151-152条 -->
+            <tr>
+                <td>151</td>
+                <td class="error-message">throw new MQClientException("offset < 0", null)</td>
+                <td>DefaultMQPullConsumerImpl.java</td>
+                <td>边界校验确保offset非负，处理异常输入</td>
+            </tr>
+            <tr>
+                <td>152</td>
+                <td class="error-message">throw new MQClientException("maxNums <= 0", null)</td>
+                <td>DefaultMQPullConsumerImpl.java</td>
+                <td>确保拉取数量为正数，符合业务需求</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
